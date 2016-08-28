@@ -5,9 +5,11 @@
 
 class Stack():
 
+    #Create new stack"
     def __init__(self):
         self.newStack = []
 
+    #Set len() definition
     def __len__(self):
         return len(self.newStack)
 
