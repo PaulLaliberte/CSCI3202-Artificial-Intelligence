@@ -5,7 +5,7 @@
 
 class Stack():
 
-    #Create new stack"
+    #Create new stack
     def __init__(self):
         self.newStack = []
 
