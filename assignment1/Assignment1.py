@@ -2,7 +2,17 @@
 import sys
 
 class Node:
-	#your code goes here
+
+    def __init__(self, v, l, r, p):
+        self.value = v
+        self.left = l
+        self.right = r
+        self.parent = p
+
+    def getChildren(self):
+        return [self.left, self.right]
+
+
 			
 class Tree:
 	def __init__(self, rootkey):
@@ -16,38 +26,58 @@ class Tree:
 		if root == None:
 			#if there is no root in tree
 			return False
-		if root.intkey == parentValue:
-			if root.l == None:
-				newNode = Node(value, None, None, root)
-				root.l = newNode
-				return newNode
-			elif root.r == None:
-				newNode = Node(value, None, None, root)
-				root.r = newNode
-				return newNode
+		if root.value == parentValue:
+			if root.l == None or root.r == None:
+				return root 
 			else:
-				print "Parent has two children, node not added."
+				print("Parent has two children, node not added.")
 				return False
 		else:
 			for child in root.getChildren():
 				add_temp = self.checkTree(value, parentValue, child)
 				if add_temp:
 					return add_temp
-		
-		
-	#your code goes here
+
+
+        def addRecursive(self, head, value, parentValue):
+                if head == None:
+                    return False
+
+                if head.value == parentValue:
+                    if head.left == None and head.right == None:
+                        head.left = Node(value, None, None, head)
+                    elif head.left != None and head.right == None:
+                        head.right = Node(value, None, None, head)
+                    elif head.left != None and head.right != None:
+                        print("Parent has two children, node not added.")
+                    else:
+                        print("Could not find parent.")
+                    return True
+                else:
+                    return self.addRecursive(head.left, value, parentValue) or self.addRecursive(head.right, value,
+                                                                                                 parentValue)
+
+
+	def add(self, value, parentValue):
+                if self.root == None:
+                    self.root = Node(value, None, None, None)
+                else:
+                    tf = self.addRecursive(self.root, value, parentValue)
+                    if tf is False : print("Parent not found.")
+
+
+
+
 	
 	def findNodeDelete(self, value, root):
 		if root == None:
 			return False
-		if value == root.intkey:
-			if root.l == None and root.r == None:
-				#print("Deleting Node", root.intkey)
-				#update parent
-				if root.p.l.intkey == value:
-					root.p.l = None
-				elif root.p.r.intkey == value:
-					root.p.r = None
+		if value == root.value:
+			if root.left == None and root.right == None:
+				if root.parent.left.value == value:
+					root.parent.left = None
+				elif root.parent.right.value == value:
+					root.parent.right = None
 				root = None
 				return True
 			else:
@@ -63,9 +93,9 @@ class Tree:
 		
 	def delete(self, value):
 		if self.root == None:
-			self.root = MyNode(value, None, None, None)
-		if value == self.root.intkey:
-			if self.root.l == None and self.root.r == None:
+			self.root = Node(value, None, None, None)
+		if value == self.root.value:
+			if self.root.left == None and self.root.right == None:
 				#print("Deleting Root")
 				self.root = None
 				return True
@@ -78,40 +108,59 @@ class Tree:
 				if delete_node:
 					return delete_node
 					
-		print "Node not found." 
+		print "Parent not found." 
 		return False
 		
 	def printTree(self):
-		if self.root != None:
-			print self.root.intkey
-			for child in self.root.getChildren():
-				self.printBranch(child)
-		else: 
-			return
+		if self.root:
+                    self.printBranch(self.root)
 			
 	
 	def printBranch(self, root):
-		if root == None:
-			return
-		else:
-			print root.intkey
-			for child in root.getChildren():
-				self.printBranch(child)
-					
+		print(root.value)
+                if root.left:
+                    self.printBranch(root.left)
+                if root.right:
+                    self.printBranch(root.right)
+
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	
+
 class Graph:
-	def __init__(self):
-		self.verticies = {}
-			
-	def addVertex(self, value):
-		#check if value already exists
-		if value in self.verticies:
-			print "Vertex already exists"
-		else:
-			self.verticies[value] = []
-	#your code goes here.		
-			
+    def __init__(self):
+        self.vertices = {}
+
+    def addVertex(self, value):
+        #check if value already exists
+        if value in self.vertices:
+            print("Vertex already exists")
+        else:
+            self.vertices[value] = []
+
+    def addEdge(self, value1, value2):
+        #check for vertex
+        if value1 not in self.vertices or value2 not in self.vertices:
+            print("One or more vertices not found.")
+        else:
+            #connect both
+            self.vertices[value1].append(value2)
+            self.vertices[value2].append(value1)
+
+
+    def findVertex(self, value):
+        foundValue = False
+        if value in self.vertices:
+            foundValue = True
+        
+        #print adjacent
+        edges = []
+        if foundValue == True:
+            for i in self.vertices[value]:
+                edges.append(i)
+            print(edges)
+        else:
+            print("Not found.")
+	
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 Tests
 '''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -122,6 +171,7 @@ print "-------------------------------------------"
 print "Tree Test"
 print "add 10 ints to tree, print In-Order, delete 2 ints, print In-Order"
 print ""
+
 
 tree = Tree(5)
 tree.add(6,5)
@@ -134,11 +184,11 @@ tree.add(9,7)
 tree.add(1,3)
 tree.add(10,3)
 
-print ""
+print("")
 
 tree.printTree()
 
-print ""
+print("")
 
 tree.delete(10)
 tree.delete(1)
@@ -187,9 +237,12 @@ g.addEdge(14,100)
 g.addEdge(100,19)
 g.addEdge(19,18)
 g.addEdge(19,17)
+g.addEdge(52, 53)
 
 g.findVertex(1)
 g.findVertex(12)
 g.findVertex(13)
 g.findVertex(14)
 g.findVertex(100)
+g.findVertex(52)
+
