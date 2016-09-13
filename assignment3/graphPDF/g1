@@ -1,0 +1,68 @@
+graph {
+	A
+	B
+		A -- B [label=1]
+	C
+	D
+		C -- D [label=4]
+	B
+	C
+		B -- C [label=4]
+	B
+	P
+		B -- P [label=6]
+	E
+	R
+		E -- R [label=3]
+	D
+	E
+		D -- E [label=4]
+	D
+	G
+		D -- G [label=5]
+	G
+	H
+		G -- H [label=3]
+	G
+	R
+		G -- R [label=4]
+	I
+	K
+		I -- K [label=3]
+	H
+	I
+		H -- I [label=2]
+	H
+	J
+		H -- J [label=3]
+	K
+	F
+		K -- F [label=2]
+	M
+	N
+		M -- N [label=3]
+	L
+	M
+		L -- M [label=2]
+	O
+	K
+		O -- K [label=5]
+	N
+	O
+		N -- O [label=4]
+	Q
+	L
+		Q -- L [label=2]
+	P
+	Q
+		P -- Q [label=7]
+	S
+	A
+		S -- A [label=2]
+	R
+	L
+		R -- L [label=2]
+	R
+	J
+		R -- J [label=2]
+}

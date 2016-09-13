@@ -3,7 +3,6 @@
    Version: Python 2.7.x
 """
 
-
 class Vertex:
 
     def __init__(self,vertex):
@@ -38,21 +37,19 @@ class Graph:
         return iter(self.vertexDictionary.values())
 
     def addVertex(self,vertex):
-        newVertex = Vertex(vertex)
-        self.vertexDictionary[vertex] = newVertex
-        return newVertex
+        if vertex not in self.vertexDictionary:
+            newVertex = Vertex(vertex)
+            self.vertexDictionary[vertex] = newVertex
+            return newVertex
 
 
     def addEdge(self,vertex1,vertex2,weight=0):
         if vertex1 not in self.vertexDictionary:
             self.addVertex(vertex1)
-            self.vertexDictionary[vertex1].addConnection(self.vertexDictionary[vertex2], weight)
         if vertex2 not in self.vertexDictionary:
             self.addVertex(vertex2)
 
         self.vertexDictionary[vertex1].addConnection(self.vertexDictionary[vertex2], weight)
-        self.vertexDictionary[vertex2].addConnection(self.vertexDictionary[vertex1], weight)
-
 
 
 
