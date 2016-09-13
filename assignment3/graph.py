@@ -15,8 +15,8 @@ class Vertex:
         adj = str([i.vertex for i in self.adjacent])
         return vtx + ' adjacent vertex: ' + adj
 
-    def addConnection(self,weight=0):
-        pass
+    def addConnection(self,vertex,weight=0):
+        self.adjacent[vertex] = weight
 
     def getConnection(self):
         return self.adjacent.keys()
@@ -24,8 +24,8 @@ class Vertex:
     def getVertex(self):
         return self.vertex
 
-    def getWeight(self,connection):
-        pass
+    def getWeight(self,vertex):
+        return self.adjacent[vertex]
 
 
 
@@ -33,16 +33,29 @@ class Graph:
     
     def __init__(self):
         self.vertexDictionary = {}
-        self.verticesCount = 0
 
     def __iter__(self):
         return iter(self.vertexDictionary.values())
 
     def addVertex(self,vertex):
-        pass
+        newVertex = Vertex(vertex)
+        self.vertexDictionary[vertex] = newVertex
+        return newVertex
+
 
     def addEdge(self,vertex1,vertex2,weight=0):
-        pass
+        if vertex1 not in self.vertexDictionary:
+            self.addVertex(vertex1)
+            self.vertexDictionary[vertex1].addConnection(self.vertexDictionary[vertex2], weight)
+        if vertex2 not in self.vertexDictionary:
+            self.addVertex(vertex2)
+
+        self.vertexDictionary[vertex1].addConnection(self.vertexDictionary[vertex2], weight)
+        self.vertexDictionary[vertex2].addConnection(self.vertexDictionary[vertex1], weight)
+
+
+
+
 
 
 
