@@ -3,58 +3,82 @@
    Version: Python 2.7.x
 """
 
+import sys
+
 class Vertex:
-
-    def __init__(self,vertex):
-        self.vertex=vertex
+    def __init__(self, node):
+        self.id = node
         self.adjacent = {}
+        self.cost = sys.maxint
+        self.visited = False
+        self.previous = None
 
-    def __str__(self):
-        vtx = str(self.vertex)
-        adj = str([i.vertex for i in self.adjacent])
-        return vtx + ' adjacent vertex: ' + adj
+    def addNode(self, node, weight=0):
+        self.adjacent[node] = weight
 
-    def addConnection(self,vertex,weight=0):
-        self.adjacent[vertex] = weight
-
-    def getConnection(self):
+    def getConnections(self):
         return self.adjacent.keys()
 
-    def getVertex(self):
-        return self.vertex
+    def getId(self):
+        return self.id
 
-    def getWeight(self,vertex):
-        return self.adjacent[vertex]
+    def getWeight(self, node):
+        return self.adjacent[node]
+
+    def setCost(self, cost):
+        self.cost = cost
+
+    def getCost(self):
+        return self.cost
+
+    def setPrevious(self, previous):
+        self.previous = previous
+
+    def setVisited(self):
+        self.visited = True
+
+
 
 
 
 class Graph:
-    
+
     def __init__(self):
         self.vertexDictionary = {}
+        self.numVertices = 0
 
     def __iter__(self):
         return iter(self.vertexDictionary.values())
 
-    def addVertex(self,vertex):
-        if vertex not in self.vertexDictionary:
-            newVertex = Vertex(vertex)
-            self.vertexDictionary[vertex] = newVertex
-            return newVertex
+    def addVertex(self, node):
+        self.numVertices = self.numVertices + 1
+        newV = Vertex(node)
+        self.vertexDictionary[node] = newV
+        return newV
+
+    def getVertex(self, node):
+        if node in self.vertexDictionary:
+            return self.vertexDictionary[node]
+        else:
+            return None
+
+    def addEdge(self, v1, v2, weight = 0):
+        if v1 not in self.vertexDictionary:
+            self.addVertex(v1)
+        if v2 not in self.vertexDictionary:
+            self.addVertex(v2)
+
+        self.vertexDictionary[v1].addNode(self.vertexDictionary[v2], weight)
 
 
-    def addEdge(self,vertex1,vertex2,weight=0):
-        if vertex1 not in self.vertexDictionary:
-            self.addVertex(vertex1)
-        if vertex2 not in self.vertexDictionary:
-            self.addVertex(vertex2)
+    def getVerticies(self):
+        return self.vertexDictionary.keys()
 
-        self.vertexDictionary[vertex1].addConnection(self.vertexDictionary[vertex2], weight)
+    def setPrevious(self, curr):
+        self.setPrevious = curr
 
+    def getPrevious(self, curr):
+        return self.previous
 
-
-
-
-
-        
+      
    
