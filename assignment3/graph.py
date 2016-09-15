@@ -3,13 +3,12 @@
    Version: Python 2.7.x
 """
 
-import sys
 
 class Vertex:
     def __init__(self, node):
         self.id = node
         self.adjacent = {}
-        self.cost = sys.maxint
+        self.cost = float('inf')
         self.visited = False
         self.previous = None
 
@@ -40,18 +39,15 @@ class Vertex:
 
 
 
-
 class Graph:
 
     def __init__(self):
         self.vertexDictionary = {}
-        self.numVertices = 0
 
     def __iter__(self):
         return iter(self.vertexDictionary.values())
 
     def addVertex(self, node):
-        self.numVertices = self.numVertices + 1
         newV = Vertex(node)
         self.vertexDictionary[node] = newV
         return newV

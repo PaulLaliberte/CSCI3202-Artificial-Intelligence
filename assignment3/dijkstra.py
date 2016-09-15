@@ -1,9 +1,15 @@
+"""Use of a heap for dij."""
+
+
 import heapq
+
 
 def dijkstra(graph, start, end):
     start.setCost(0)
 
-    queue = [(v.getCost(),v) for v in graph]
+    queue = []
+    for vertex in graph:
+        queue.append((vertex.getCost(), vertex))
     heapq.heapify(queue)
 
     while len(queue):
@@ -11,17 +17,21 @@ def dijkstra(graph, start, end):
         curr = unvisited[1]
         curr.setVisited()
 
-        for next in curr.adjacent:
-            if next.visited:
-                continue
-            newCost = curr.getCost() + curr.getWeight(next)
+        for n in curr.adjacent:
+            if not n.visited:
+                pass
 
-            if newCost < next.getCost():
-                next.setCost(newCost)
-                next.setPrevious(curr)
+            newCost = curr.getCost() + curr.getWeight(n)
+
+            if newCost < n.getCost():
+                n.setCost(newCost)
+                n.setPrevious(curr)
 
         while len(queue):
             heapq.heappop(queue)
 
-        queue = [(v.getCost(), v) for v in graph if not v.visited]
+        for vertex in graph:
+            if not vertex.visited:
+                queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
+

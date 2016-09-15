@@ -9,7 +9,7 @@ from graph import *
 from sys import argv
 
 g = Graph()
-"""
+
 with open('assignment3.txt') as f:
     for line in f:
         array = []
@@ -33,9 +33,9 @@ with open('assignment3.txt') as h:
             array.append(i)
 
         g.addEdge(array[0], array[1], int(array[2]))
+
+
 """
-
-
 g.addVertex('S')
 g.addVertex('A')
 g.addVertex('B')
@@ -80,7 +80,7 @@ g.addEdge('O','K',5)
 g.addEdge('I','K',3)
 g.addEdge('S','A',2)
 g.addEdge('K','F',2)
-
+"""
 
 
 
