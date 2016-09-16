@@ -10,6 +10,8 @@ from graph import *
 from sys import argv
 
 g = Graph()
+a = Graph()
+
 
 with open('assignment3.txt') as f:
     for line in f:
@@ -27,6 +29,9 @@ with open('assignment3.txt') as f:
         else:
             g.addVertex(array[0])
             g.addVertex(array[1])
+            a.addVertex(array[0])
+            a.addVertex(array[1])
+
         
 
 
@@ -44,6 +49,8 @@ with open('assignment3.txt') as h:
             break
         else:
             g.addEdge(array[0], array[1], int(array[2]))
+            a.addEdge(array[0], array[1], int(array[2]))
+
 
 array = []
 newArray = []
@@ -67,16 +74,28 @@ with open('assignment3.txt') as i:
                     print q
     """
 
-getHeuristic('A', newArray)
-"""
 dijkstra(g, g.getVertex('S'), g.getVertex('F'))
+#getHeuristic('A', newArray)
+
+a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
+
+
+
+
 
 goal = g.getVertex('F')
 
 shortestPath = [goal.getId()]
 shortest(goal, shortestPath)
 print shortestPath[::-1]
-"""
+
+goal = a.getVertex('F')
+
+shortestPath = [goal.getId()]
+shortest(goal, shortestPath)
+print shortestPath[::-1]
+
+
 
 
 """
