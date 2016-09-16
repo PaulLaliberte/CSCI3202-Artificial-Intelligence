@@ -39,5 +39,6 @@ def dijkstra(graph, start, end):
             if not vertex.visited:
                 queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
+    solved.append(end.getId())
     return solved
 

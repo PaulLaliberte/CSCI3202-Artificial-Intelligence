@@ -57,6 +57,7 @@ def a_Star(graph, start, goal, hArray):
             if not vertex.visited:
                 queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
+    solved.append(goal.getId())
     return solved
    
             

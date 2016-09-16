@@ -78,12 +78,16 @@ print("Solved nodes for Dijkstra: ")
 for i in dx:
     print(i , end='')
 print("\n")
+print("Number of nodes solved: %i" % len(dx))
+print("\n")
 
 
 ax = a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
 print("Solved nodes for A*: ")
 for i in ax:
     print(i , end='')
+print("\n")
+print("Number of nodes solved: %i" % len(ax))
 print("\n")
 
 
@@ -173,12 +177,16 @@ print("Solved nodes for Dijkstra: ")
 for i in dx:
     print(i , end='')
 print("\n")
+print("Number of nodes solved: %i" % len(dx))
+print("\n")
 
 
 ax = a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
 print("Solved nodes for A*: ")
 for i in ax:
     print(i , end='')
+print("\n")
+print("Number of nodes solved: %i" % len(ax))
 print("\n")
 
 
