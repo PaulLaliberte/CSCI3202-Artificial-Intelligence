@@ -6,6 +6,7 @@ import heapq
 
 def dijkstra(graph, start, end):
     start.setCost(0)
+    evaluatedCounter = 0
 
     queue = []
     for vertex in graph:
@@ -34,4 +35,6 @@ def dijkstra(graph, start, end):
             if not vertex.visited:
                 queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
+        evaluatedCounter = evaluatedCounter + 1
+    return evaluatedCounter
 

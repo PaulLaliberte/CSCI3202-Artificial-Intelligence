@@ -74,10 +74,10 @@ with open('assignment3.txt') as i:
                     print q
     """
 
-dijkstra(g, g.getVertex('S'), g.getVertex('F'))
+print "dijkstra number of evaluated nodes: %i" % dijkstra(g, g.getVertex('S'), g.getVertex('F'))
 #getHeuristic('A', newArray)
 
-a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
+print "a* number of evaluated nodes: %i" % a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
 
 
 

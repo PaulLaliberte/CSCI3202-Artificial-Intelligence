@@ -8,11 +8,12 @@ def getHeuristic(a, array):
         for q in p:
             for r in q:
                 if a is r:
-                    heuristic = q[2]
+                    heuristic = q[2:]
     return heuristic
 
 def a_Star(graph, start, goal, hArray):
     start.setCost(0)
+    evaluatedCounter = 0
 
     queue = []
     for vertex in graph:
@@ -41,6 +42,8 @@ def a_Star(graph, start, goal, hArray):
             if not vertex.visited:
                 queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
+        evaluatedCounter = evaluatedCounter + 1
+    return evaluatedCounter
 
    
             

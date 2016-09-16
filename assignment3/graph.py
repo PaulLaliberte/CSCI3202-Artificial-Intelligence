@@ -65,6 +65,8 @@ class Graph:
             self.addVertex(v2)
 
         self.vertexDictionary[v1].addNode(self.vertexDictionary[v2], weight)
+        #comment out if using graphviz
+        self.vertexDictionary[v2].addNode(self.vertexDictionary[v1], weight)
 
 
     def getVerticies(self):
