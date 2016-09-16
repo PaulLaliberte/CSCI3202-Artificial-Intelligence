@@ -13,7 +13,8 @@ def getHeuristic(a, array):
 
 def a_Star(graph, start, goal, hArray):
     start.setCost(0)
-    evaluatedCounter = 0
+    solved = []
+    goalReached = False
 
     queue = []
     for vertex in graph:
@@ -34,6 +35,22 @@ def a_Star(graph, start, goal, hArray):
             if newCost < n.getCost():
                 n.setCost(newCost)
                 n.setPrevious(curr)
+                print 'updated : current = %s next = %s new_dist = %s' \
+                        %(curr.getId(), n.getId(), n.getCost())
+                if curr.getId() not in solved:
+                    solved.append(curr.getId())
+
+                
+                if n.getId() is goal.getId():
+                    goalReached = True
+
+            if goalReached is True:
+                break
+        if goalReached is True:
+            break
+        
+
+
 
         while len(queue):
             heapq.heappop(queue)
@@ -42,9 +59,7 @@ def a_Star(graph, start, goal, hArray):
             if not vertex.visited:
                 queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
-        evaluatedCounter = evaluatedCounter + 1
-    return evaluatedCounter
-
+    return solved
    
             
 

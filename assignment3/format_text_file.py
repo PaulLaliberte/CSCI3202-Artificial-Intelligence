@@ -48,8 +48,11 @@ with open('assignment3.txt') as h:
         if len(array) is 0:
             break
         else:
-            g.addEdge(array[0], array[1], int(array[2]))
-            a.addEdge(array[0], array[1], int(array[2]))
+            x = array[2:]
+            x[:] = [''.join(x[:])]
+            g.addEdge(array[0], array[1], int(x[0]))
+
+            a.addEdge(array[0], array[1], int(x[0]))
 
 
 array = []
@@ -74,10 +77,13 @@ with open('assignment3.txt') as i:
                     print q
     """
 
-print "dijkstra number of evaluated nodes: %i" % dijkstra(g, g.getVertex('S'), g.getVertex('F'))
+
+dx = dijkstra(g, g.getVertex('S'), g.getVertex('F'))
+print "dijkstra number of evaluated nodes: %i" % (len(dx)+1)
 #getHeuristic('A', newArray)
 
-print "a* number of evaluated nodes: %i" % a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
+ax = a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
+print "a* number of evaluated nodes: %i" % (len(ax) + 1)
 
 
 
@@ -87,12 +93,14 @@ goal = g.getVertex('F')
 
 shortestPath = [goal.getId()]
 shortest(goal, shortestPath)
+print "Dijkstra shortest path:"
 print shortestPath[::-1]
 
 goal = a.getVertex('F')
 
 shortestPath = [goal.getId()]
 shortest(goal, shortestPath)
+print "A* shortest path:"
 print shortestPath[::-1]
 
 
