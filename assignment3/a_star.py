@@ -13,7 +13,7 @@ def getHeuristic(a, array):
 
 def a_Star(graph, start, goal, hArray):
     start.setCost(0)
-    solved = []
+    solved = [start.getId()]
     goalReached = False
 
     queue = []
@@ -35,8 +35,6 @@ def a_Star(graph, start, goal, hArray):
             if newCost < n.getCost():
                 n.setCost(newCost)
                 n.setPrevious(curr)
-                print 'updated : current = %s next = %s new_dist = %s' \
-                        %(curr.getId(), n.getId(), n.getCost())
                 if curr.getId() not in solved:
                     solved.append(curr.getId())
 

@@ -3,11 +3,13 @@
    Comment out graphviz if not installed.
 """
 #import graphviz as gv
+from __future__ import print_function
 from dijkstra import *
 from a_star import *
 from shortest import *
 from graph import *
 from sys import argv
+import time
 
 g = Graph()
 a = Graph()
@@ -69,41 +71,133 @@ with open('assignment3.txt') as i:
         m = m + 1
         if i is '':
             newArray.append(array[m:len(array)-1])
-    """
-    for p in newarray:
-        for q in p:
-            for r in q:
-                if r is 'A':
-                    print q
-    """
 
 
 dx = dijkstra(g, g.getVertex('S'), g.getVertex('F'))
-print "dijkstra number of evaluated nodes: %i" % (len(dx)+1)
-#getHeuristic('A', newArray)
+print("Solved nodes for Dijkstra: ")
+for i in dx:
+    print(i , end='')
+print("\n")
+
 
 ax = a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
-print "a* number of evaluated nodes: %i" % (len(ax) + 1)
-
-
-
+print("Solved nodes for A*: ")
+for i in ax:
+    print(i , end='')
+print("\n")
 
 
 goal = g.getVertex('F')
 
 shortestPath = [goal.getId()]
 shortest(goal, shortestPath)
-print "Dijkstra shortest path:"
-print shortestPath[::-1]
+print("Dijkstra shortest path:")
+print(shortestPath[::-1])
 
 goal = a.getVertex('F')
 
 shortestPath = [goal.getId()]
 shortest(goal, shortestPath)
-print "A* shortest path:"
-print shortestPath[::-1]
+print("A* shortest path:")
+print(shortestPath[::-1])
+
+time.sleep(2)
+
+#-------------------------------------------------#
+print("----------------------------------------------\n")
+print("Solving with heuristic C=1000000\n")
+g = Graph()
+a = Graph()
 
 
+with open('assignment.txt') as f:
+    for line in f:
+        array = []
+        cs = "[']\r\n,"
+        for char in cs:
+            line = line.replace(char,"")
+
+        for i in line:
+            array.append(i)
+
+
+        if len(array) is 0:
+            break
+        else:
+            g.addVertex(array[0])
+            g.addVertex(array[1])
+            a.addVertex(array[0])
+            a.addVertex(array[1])
+
+        
+
+
+with open('assignment.txt') as h:
+    for line in h:
+        array = []
+        cs = "[']\r\n,"
+        for char in cs:
+            line = line.replace(char,"")
+
+        for i in line:
+            array.append(i)
+
+        if len(array) is 0:
+            break
+        else:
+            x = array[2:]
+            x[:] = [''.join(x[:])]
+            g.addEdge(array[0], array[1], int(x[0]))
+
+            a.addEdge(array[0], array[1], int(x[0]))
+
+
+array = []
+newArray = []
+
+with open('assignment.txt') as i:
+    for line in i:
+        cs = "[']\r\n,"
+        for char in cs:
+            line = line.replace(char,"")
+        array.append(line)
+    m = 0
+    for i in array:
+        m = m + 1
+        if i is '':
+            newArray.append(array[m:len(array)-1])
+
+
+dx = dijkstra(g, g.getVertex('S'), g.getVertex('F'))
+print("Solved nodes for Dijkstra: ")
+for i in dx:
+    print(i , end='')
+print("\n")
+
+
+ax = a_Star(a, a.getVertex('S'), a.getVertex('F'), newArray)
+print("Solved nodes for A*: ")
+for i in ax:
+    print(i , end='')
+print("\n")
+
+
+goal = g.getVertex('F')
+
+shortestPath = [goal.getId()]
+shortest(goal, shortestPath)
+print("Dijkstra shortest path:")
+print(shortestPath[::-1])
+
+goal = a.getVertex('F')
+
+shortestPath = [goal.getId()]
+shortest(goal, shortestPath)
+print("A* shortest path:")
+print(shortestPath[::-1])
+
+
+#-------------------------------------------------#
 
 
 """

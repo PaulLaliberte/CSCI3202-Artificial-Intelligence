@@ -6,7 +6,7 @@ import heapq
 
 def dijkstra(graph, start, end):
     start.setCost(0)
-    solved = []
+    solved = [start.getId()]
 
     queue = []
     for vertex in graph:
@@ -27,8 +27,6 @@ def dijkstra(graph, start, end):
             if newCost < n.getCost():
                 n.setCost(newCost)
                 n.setPrevious(curr)
-                print 'updated : current = %s next = %s new_dist = %s' \
-                        %(curr.getId(), n.getId(), n.getCost())
                 if curr.getId() not in solved:
                     solved.append(curr.getId())
 
