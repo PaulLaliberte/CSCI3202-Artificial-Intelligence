@@ -43,6 +43,7 @@ def a_Star(graph, start, goal, hArray):
                     goalReached = True
 
             if goalReached is True:
+                goal.setVisited()
                 break
         if goalReached is True:
             break
@@ -57,7 +58,8 @@ def a_Star(graph, start, goal, hArray):
             if not vertex.visited:
                 queue.append((vertex.getCost(), vertex))
         heapq.heapify(queue)
-    solved.append(goal.getId())
+    if goal.visited:
+        solved.append(goal.getId())
     return solved
    
             
