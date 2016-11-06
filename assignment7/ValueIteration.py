@@ -140,7 +140,17 @@ myMDP = GridMDP([[-0.04, -0.04, -0.04, +1],
                      [-0.04, -0.04, -0.04, -0.04]],
                     terminals=[(3,1),(3,2)])
 
-U = value_iteration(myMDP, .001)
+myMDP2 = GridMDP([[0, 0, 0, 0, -1, 0, -1, -1, 0, 50],
+                    [None, None, -1, -1, 0, -.5, None, 0, None, 0],
+                    [0, 0, 0, 0, 0, -.5, None, 0, 0, 0],
+                    [None, 2, None, None, 0, -.5, 0, 2, None, 0],
+                    [0, 0, None, 0, 0, None, -1, -.5, -1, 0],
+                    [0, -.5, None, 0, 0, None, 0, 0, None, 0],
+                    [0, -.5, None, 0, -1, None, 0, -1, None, None],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
+                    terminals=[(0,0),(10,10)])
+
+U = value_iteration(myMDP2, .001)
 print U
 
 '''
