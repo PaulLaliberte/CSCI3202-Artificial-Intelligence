@@ -132,40 +132,7 @@ def policy_evaluation(pi, U, mdp, k=20):
     R, T, gamma = mdp.R, mdp.T, mdp.gamma
     for i in range(k):
         for s in mdp.states:
-            U[s] = R(s) + gamma * sum([p * U[s] for (p, s1) in T(s, pi[s])])
+            U[s] = R(s) + gamma * sum([p * U[s1] for (p, s1) in T(s, pi[s])])
     return U
 
-myMDP = GridMDP([[-0.04, -0.04, -0.04, +1],
-                     [-0.04, None,  -0.04, -1],
-                     [-0.04, -0.04, -0.04, -0.04]],
-                    terminals=[(3,1),(3,2)])
-
-myMDP2 = GridMDP([[0, 0, 0, 0, -1, 0, -1, -1, 0, 50],
-                    [None, None, -1, -1, 0, -.5, None, 0, None, 0],
-                    [0, 0, 0, 0, 0, -.5, None, 0, 0, 0],
-                    [None, 2, None, None, 0, -.5, 0, 2, None, 0],
-                    [0, 0, None, 0, 0, None, -1, -.5, -1, 0],
-                    [0, -.5, None, 0, 0, None, 0, 0, None, 0],
-                    [0, -.5, None, 0, -1, None, 0, -1, None, None],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
-                    terminals=[(0,0),(9,9)])
-
-U = value_iteration(myMDP2, .001)
-print U
-
-'''
-
 #AI: A Modern Approach by Stuart Russell and Peter Norvig	Modified: Jul 18, 2005
-
-The data matrix you will need for the assignment:
-
-[0, 0, 0, 0, -1, 0, -1, -1, 0, 50],
-[None, None, -1, -1, 0, -.5, None, 0, None, 0],
-[0, 0, 0, 0, 0, -.5, None, 0, 0, 0],
-[None, 2, None, None, 0, -.5, 0, 2, None, 0],
-[0, 0, None, 0, 0, None, -1, -.5, -1, 0],
-[0, -.5, None, 0, 0, None, 0, 0, None, 0],
-[0, -.5, None, 0, -1, None, 0, -1, None, None],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-'''
