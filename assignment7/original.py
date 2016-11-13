@@ -1,6 +1,8 @@
 """Solves for given matrix and gridWorld matrix for assignment7"""
 
-from ValueIteration import *
+#from ValueIteration import *
+
+from horse_jump_mdp import *
 
 
 def solution_value():
@@ -34,6 +36,7 @@ def solution_value():
 
     try:
         utility = value_iteration(myMDP)
+        print utility
         bp = best_policy(myMDP, utility)
 
 

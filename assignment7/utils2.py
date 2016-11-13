@@ -514,7 +514,7 @@ def normalize(numbers, total=1.0):
 ## functions here, but they do show up wherever we have 2D grids: Wumpus and
 ## Vacuum worlds, TicTacToe and Checkers, and markov decision Processes.
 
-orientations = [(1,0), (0, 1), (-1, 0), (0, -1)]
+orientations = [(1,0),(-1,0),(0,1),(0,-1), (2,0), (0, 2), (-2, 0), (0, -2)]
 
 def turn_right(orientation):
     return orientations[orientations.index(orientation)-1]
