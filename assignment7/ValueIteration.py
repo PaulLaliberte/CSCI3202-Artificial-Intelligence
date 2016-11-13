@@ -88,6 +88,7 @@ def value_iteration(mdp, epsilon=0.001):
     "Solving an MDP by value iteration. [Fig. 17.4]"
     U1 = dict([(s, 0) for s in mdp.states])
     R, T, gamma = mdp.R, mdp.T, mdp.gamma
+    print gamma
     while True:
         U = U1.copy()
         delta = 0
