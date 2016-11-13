@@ -522,6 +522,12 @@ def turn_right(orientation):
 def turn_left(orientation):
     return orientations[(orientations.index(orientation)+1) % len(orientations)]
 
+def jump(orientation):
+    try:
+        return orientations[orientations.index(orientation)]
+    except ValueError:
+        pass
+
 def distance((ax, ay), (bx, by)):
     "The distance between two (x, y) points."
     return math.hypot((ax - bx), (ay - by))

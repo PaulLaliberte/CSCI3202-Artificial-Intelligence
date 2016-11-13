@@ -48,17 +48,26 @@ class GridMDP(MDP):
                     self.states.add((x, y)) 
 
     def T(self, state, action):
+        jumps = [(2,0), (-2,0), (0,2), (0,-2)]
+
         if action == None:
             return [(0.0, state)]
         else:
-            return [(0.8, self.go(state, action)),
-                    (0.1, self.go(state, turn_right(action))),
-                    (0.1, self.go(state, turn_left(action)))]
+            if action in jumps:
+                #print "here"
+                return [(0.5, self.go(state, action)),
+                        (0.5, state)]
+            else:
+                #print "OTHER"
+                return [(0.8, self.go(state, action)),
+                        (0.1, self.go(state, turn_right(action))),
+                        (0.1, self.go(state, turn_left(action)))]
 
     def go(self, state, direction):
         "Return the state that results from going in this direction."
-        state1 = vector_add(state, direction)
-        return if_(state1 in self.states, state1, state)
+        if direction is not None:
+            state1 = vector_add(state, direction)
+            return if_(state1 in self.states, state1, state)
 
     def to_grid(self, mapping):
         """Convert a mapping from (x, y) to v into a [[..., v, ...]] grid."""
@@ -75,7 +84,6 @@ def value_iteration(mdp, epsilon=0.001):
     "Solving an MDP by value iteration. [Fig. 17.4]"
     U1 = dict([(s, 0) for s in mdp.states])
     R, T, gamma = mdp.R, mdp.T, mdp.gamma
-    print gamma
     while True:
         U = U1.copy()
         delta = 0
