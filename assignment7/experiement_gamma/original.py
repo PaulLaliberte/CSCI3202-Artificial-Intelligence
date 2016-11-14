@@ -1,30 +1,44 @@
-"""Interates through changes for live rewards"""
+"""Solves for given matrix and gridWorld matrix for assignment7"""
+
+#from ValueIteration import *
 
 from ValueIteration import *
-from live_reward_matrices import *
+import time
+
 
 def solution_value():
-
-
-    
-
     """
     myMDP = GridMDP( [[-0.04, -0.04, -0.04,   +1 ],
                      [-0.04, None,  -0.04,   -1  ],
                      [-0.04, -0.04, -0.04, -0.04]],
                     terminals=[(3,1),(3,2)])
-    """        
+    """
 
-    print "Order of live reward tests: -.1, -.2, ..., -1 | .1, .2, ..., 1 \n\n"
-
-    for gridWorld in live_rewards:
-
-        myMDP = gridWorld
-
-        original_path = [(0,0), (1,0), (2,0), (3,0), (4,0), 
+    original_path = [(0,0), (1,0), (2,0), (3,0), (4,0), 
                      (5,0), (6,0), (6,1), (6,2), (6,3), 
                      (6,4), (7,4), (7,5), (8,5), (9,5), 
                      (9,6), (9,7)]
+
+    myMDP = GridMDP([[0, 0, 0, 0, -1, 0, -1, -1, 0, 75],
+                    [None, None, -1, -1, 0, -.5, None, 0, None, 0],
+                    [0, 0, 0, 0, 0, -.5, None, 0, 0, 0],
+                    [None, 2, None, None, None, -.5, 0, 2, None, 0],
+                    [None, 0, 0, 0, 0, None, -1, -.5, -1, 0],
+                    [0, -.5, None, 0, 0, None, 0, 0, None, 0],
+                    [0, -.5, None, 0, -1, None, 0, -1, None, None],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
+                    terminals=[(9,7)])
+
+    gamma_experiment = 0.1
+    
+    #cannot evaluate quicky at 1.0
+    while gamma_experiment <= .9:
+
+
+        myMDP.gamma = gamma_experiment
+
+        print "Gamma = %.2f " % myMDP.gamma
+
 
         curr_state = (0,0)
         solution_path = []
@@ -32,17 +46,16 @@ def solution_value():
         solution_path.append(curr_state)
 
         try:
-    
             utility = value_iteration(myMDP)
             bp = best_policy(myMDP, utility)
+
 
             while curr_state not in myMDP.terminals:
                 next_state = bp[curr_state]
 
-                curr_state = tuple(map(lambda x, y: x+y, curr_state, next_state))
+                curr_state = tuple(map(lambda x,y: x+y, curr_state, next_state))
 
                 solution_path.append(curr_state)
-
 
             if solution_path == original_path:
                 print "Solution path: %s \n" % solution_path
@@ -58,32 +71,49 @@ def solution_value():
                 print "Original path: %s \n" % original_path
                 print "Points that differ: %s \n\n" % differ_points
 
+
+
         except KeyError:
             solution_path.append("Hit wall - stay at current position")
-            print "Solution path: %s \n\n" % solution_path
+            print solution_path
+            print "\n"
 
+        gamma_experiment += .1
 
 
 
 def solution_policy():
-
     """
     myMDP = GridMDP( [[-0.04, -0.04, -0.04,   +1 ],
                      [-0.04, None,  -0.04,   -1  ],
                      [-0.04, -0.04, -0.04, -0.04]],
                     terminals=[(3,1),(3,2)])
-    """
+    """ 
 
-    print "Order of live reward tests: -.1, -.2, ..., -1 | .1, .2, ..., 1 \n\n"
-
-    for gridWorld in live_rewards:
-
-        myMDP = gridWorld
-
-        original_path = [(0,0), (1,0), (2,0), (3,0), (4,0), 
+    original_path = [(0,0), (1,0), (2,0), (3,0), (4,0), 
                      (5,0), (6,0), (6,1), (6,2), (6,3), 
                      (6,4), (7,4), (7,5), (8,5), (9,5), 
                      (9,6), (9,7)]
+
+
+    myMDP = GridMDP([[0, 0, 0, 0, -1, 0, -1, -1, 0, 75],
+                    [None, None, -1, -1, 0, -.5, None, 0, None, 0],
+                    [0, 0, 0, 0, 0, -.5, None, 0, 0, 0],
+                    [None, 2, None, None, None, -.5, 0, 2, None, 0],
+                    [None, 0, 0, 0, 0, None, -1, -.5, -1, 0],
+                    [0, -.5, None, 0, 0, None, 0, 0, None, 0],
+                    [0, -.5, None, 0, -1, None, 0, -1, None, None],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
+                    terminals=[(9,7)])
+
+    gamma_experiment = .1
+
+    while gamma_experiment <= .9:
+
+        myMDP.gamma = gamma_experiment
+
+        print "Gamma = %.2f " % myMDP.gamma
+
 
         curr_state = (0,0)
         solution_path = []
@@ -91,16 +121,16 @@ def solution_policy():
         solution_path.append(curr_state)
 
         try:
-    
+
             bp = policy_iteration(myMDP)
+
 
             while curr_state not in myMDP.terminals:
                 next_state = bp[curr_state]
 
-                curr_state = tuple(map(lambda x, y: x+y, curr_state, next_state))
+                curr_state = tuple(map(lambda x,y: x+y, curr_state, next_state))
 
                 solution_path.append(curr_state)
-
 
             if solution_path == original_path:
                 print "Solution path: %s \n" % solution_path
@@ -116,7 +146,28 @@ def solution_policy():
                 print "Original path: %s \n" % original_path
                 print "Points that differ: %s \n\n" % differ_points
 
+
         except KeyError:
             solution_path.append("Hit wall - stay at current position")
-            print "Solution path: %s \n\n" % solution_path
+
+            print solution_path
+            print "\n"
+
+        gamma_experiment += .1
+
+
+if "__main__" == __name__:
     
+    print "Value Iteration - Gamma Change"
+    print "************************************\n"
+    time.sleep(2)
+
+    solution_value()
+
+    print "Policy Iteration - Gamma Change"
+    print "************************************\n"
+    time.sleep(2)
+
+    solution_policy()
+
+

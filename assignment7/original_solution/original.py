@@ -2,7 +2,8 @@
 
 #from ValueIteration import *
 
-from horse_jump_mdp import *
+from ValueIteration import *
+import time
 
 
 def solution_value():
@@ -12,11 +13,6 @@ def solution_value():
                      [-0.04, -0.04, -0.04, -0.04]],
                     terminals=[(3,1),(3,2)])
     """
-
-    original_path = [(0,0), (1,0), (2,0), (3,0), (4,0), 
-                     (5,0), (6,0), (6,1), (6,2), (6,3), 
-                     (6,4), (7,4), (7,5), (8,5), (9,5), 
-                     (9,6), (9,7)]
 
     myMDP = GridMDP([[0, 0, 0, 0, -1, 0, -1, -1, 0, 75],
                     [None, None, -1, -1, 0, -.5, None, 0, None, 0],
@@ -29,6 +25,7 @@ def solution_value():
                     terminals=[(9,7)])
 
 
+
     curr_state = (0,0)
     solution_path = []
 
@@ -36,7 +33,6 @@ def solution_value():
 
     try:
         utility = value_iteration(myMDP)
-        print utility
         bp = best_policy(myMDP, utility)
 
 
@@ -47,25 +43,14 @@ def solution_value():
 
             solution_path.append(curr_state)
 
-        if solution_path == original_path:
-            print "Solution path: %s \n" % solution_path
-            print "Path is SAME as original \n\n"
-
-        else:
-            differ_points = []
-            for i in range(0, len(solution_path)):
-                if solution_path[i] != original_path[i]:
-                    differ_points.append(solution_path[i])
-
-            print "Solution path: %s \n" % solution_path
-            print "Original path: %s \n" % original_path
-            print "Points that differ: %s \n\n" % differ_points
-
+        print solution_path
 
 
     except KeyError:
         solution_path.append("Hit wall - stay at current position")
+
         print solution_path
+
 
 
 
@@ -77,11 +62,6 @@ def solution_policy():
                     terminals=[(3,1),(3,2)])
     """ 
 
-    original_path = [(0,0), (1,0), (2,0), (3,0), (4,0), 
-                     (5,0), (6,0), (6,1), (6,2), (6,3), 
-                     (6,4), (7,4), (7,5), (8,5), (9,5), 
-                     (9,6), (9,7)]
-
 
     myMDP = GridMDP([[0, 0, 0, 0, -1, 0, -1, -1, 0, 75],
                     [None, None, -1, -1, 0, -.5, None, 0, None, 0],
@@ -92,7 +72,6 @@ def solution_policy():
                     [0, -.5, None, 0, -1, None, 0, -1, None, None],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
                     terminals=[(9,7)])
-
 
     curr_state = (0,0)
     solution_path = []
@@ -111,19 +90,8 @@ def solution_policy():
 
             solution_path.append(curr_state)
 
-        if solution_path == original_path:
-            print "Solution path: %s \n" % solution_path
-            print "Path is SAME as original \n\n"
+        print solution_path
 
-        else:
-            differ_points = []
-            for i in range(0, len(solution_path)):
-                if solution_path[i] != original_path[i]:
-                    differ_points.append(solution_path[i])
-
-            print "Solution path: %s \n" % solution_path
-            print "Original path: %s \n" % original_path
-            print "Points that differ: %s \n\n" % differ_points
 
 
     except KeyError:
@@ -131,4 +99,20 @@ def solution_policy():
 
         print solution_path
 
+
+if "__main__" == __name__:
+    
+    print "Value Iteration - Original Solution"
+    print "************************************\n"
+    time.sleep(2)
+
+    solution_value()
+
+    print "\n"
+
+    print "Policy Iteration - Original Solution"
+    print "************************************\n"
+    time.sleep(2)
+
+    solution_policy()
 
