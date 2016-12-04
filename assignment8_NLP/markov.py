@@ -1,7 +1,6 @@
 """Using Markov Process - HMM, create transition and emission probabilities, use viterbi algorithm."""
 
 from __future__ import division
-import copy
 import csv
 
 class markovChain():
