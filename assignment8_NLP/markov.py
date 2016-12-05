@@ -15,11 +15,11 @@ class markovChain():
     def preProcess(self):
         with open("penntree.tag") as f:
             readfile = csv.reader(f, delimiter='\t')
-            self.processed_list.append(['</s>', 'SSSS'])
+            self.processed_list.append(['<s>', 'SSSS'])
             for row in readfile:
                 if len(row) == 0:
                     self.processed_list.append(['</s>', 'EEEE'])
-                    self.processed_list.append(['</s>', 'SSSS'])
+                    self.processed_list.append(['<s>', 'SSSS'])
                 else:
                     self.processed_list.append(row)
 
